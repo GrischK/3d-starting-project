@@ -7,7 +7,7 @@ import * as THREE from "three";
 const Lights = () => {
   const ref = useRef();
   const helper = useHelper(ref, THREE.PointLightHelper, 0.5, "red");
-  const { lightColor, distance, lightIntensity, decay } = useControls({
+  const { lightColor, distance, lightIntensity, decay, lightPosition } = useControls({
     lightColor: "#ff0000",
     distance: 3,
     lightIntensity: {
@@ -17,10 +17,14 @@ const Lights = () => {
       step: 0.01,
     },
     decay: 2,
+    lightPosition: {
+      x: 2, y: 1, z: 0,
+    }
   });
   return (
     <>
-      <pointLight ref={ref} position={[2, 1, 0]} intensity={lightIntensity} decay={decay} color={lightColor}
+      <pointLight ref={ref} position={[lightPosition.x, lightPosition.y, lightPosition.z]} intensity={lightIntensity}
+                  decay={decay} color={lightColor}
                   distance={distance}
       />
     </>
