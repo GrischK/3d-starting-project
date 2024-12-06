@@ -31,13 +31,7 @@ export default [
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': 'warn',
-    },
-    extends: [
-      'eslint:recommended',
-      'plugin:react/recommended',
-      'plugin:react/jsx-runtime',
-      'plugin:react-hooks/recommended',
-      'plugin:@react-three/recommended',
-    ],
+      'react-three/no-primitive-objects': 'warn',
+      'react-three/no-invalid-arguments': 'error',    },
   },
 ];
