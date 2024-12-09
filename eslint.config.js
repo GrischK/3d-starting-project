@@ -32,6 +32,7 @@ export default [
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': 'warn',
       'react-three/no-primitive-objects': 'warn',
-      'react-three/no-invalid-arguments': 'error',    },
+      'react-three/no-invalid-arguments': 'error',
+    },
   },
 ];
