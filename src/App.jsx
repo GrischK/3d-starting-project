@@ -100,7 +100,7 @@
 //
 // export default App;
 
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, SoftShadows } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 function App() {
@@ -108,6 +108,7 @@ function App() {
     <>
       <Canvas camera={{ position: [0, 3, 3] }} shadows>
         <OrbitControls />
+        <SoftShadows />
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
         <directionalLight position={[-5, 5, 5]} intensity={0.5} color="red" castShadow />
