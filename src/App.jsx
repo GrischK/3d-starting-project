@@ -101,7 +101,33 @@
 // export default App;
 
 import { OrbitControls, SoftShadows } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
+import { useRef } from "react";
+import { button, useControls } from "leva";
+
+const Cube = ()=>{
+  const camera = useThree((state)=>state.camera);
+
+  const updateFov=(fov)=>{
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
+  }
+
+  useControls('FOV',{
+    smallFov:button(()=>updateFov(20)),
+    normalFov:button(()=>updateFov(42)),
+    bigFov:button(()=>updateFov(60)),
+    hugeFov:button(()=>updateFov(110)),
+    veryHugeFov:button(()=>updateFov(160)),
+  });
+
+  return (
+    <mesh rotation-y={Math.PI / 4} castShadow receiveShadow>
+      <boxGeometry />
+      <meshStandardMaterial color="white" />
+    </mesh>
+  )
+}
 
 function App() {
   return (
@@ -117,10 +143,8 @@ function App() {
           <sphereGeometry args={[0.5, 32, 32]} />
           <meshStandardMaterial color="white" />
         </mesh>
-        <mesh rotation-y={Math.PI / 4} castShadow receiveShadow>
-          <boxGeometry />
-          <meshStandardMaterial color="white" />
-        </mesh>
+
+        <Cube/>
 
         <mesh rotation-x={-Math.PI / 2} position-y={-0.5} receiveShadow>
           <planeGeometry args={[5, 5]} />
