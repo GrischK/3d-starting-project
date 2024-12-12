@@ -101,28 +101,41 @@
 // export default App;
 
 import { OrbitControls, SoftShadows } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import { button, useControls } from "leva";
 
-const Cube = ()=>{
-  const camera = useThree((state)=>state.camera);
+const Cube = (props) => {
+  const camera = useThree((state) => state.camera);
+  const ref = useRef();
 
-  const updateFov=(fov)=>{
+  const updateFov = (fov) => {
     camera.fov = fov;
     camera.updateProjectionMatrix();
   }
 
-  useControls('FOV',{
-    smallFov:button(()=>updateFov(20)),
-    normalFov:button(()=>updateFov(42)),
-    bigFov:button(()=>updateFov(60)),
-    hugeFov:button(()=>updateFov(110)),
-    veryHugeFov:button(()=>updateFov(160)),
+  useControls('FOV', {
+    smallFov: button(() => updateFov(20)),
+    normalFov: button(() => updateFov(42)),
+    bigFov: button(() => updateFov(60)),
+    hugeFov: button(() => updateFov(110)),
+    veryHugeFov: button(() => updateFov(160)),
   });
 
+  const { speed } = useControls('SPEED', {
+    speed: {
+      value: 0,
+      min: -10,
+      max: 10,
+    }
+  })
+
+  useFrame((_state, delta) => {
+    ref.current.rotation.y += speed * delta;
+  })
+
   return (
-    <mesh rotation-y={Math.PI / 4} castShadow receiveShadow>
+    <mesh {...props} ref={ref} rotation-y={Math.PI / 4} castShadow receiveShadow>
       <boxGeometry />
       <meshStandardMaterial color="white" />
     </mesh>
@@ -144,7 +157,7 @@ function App() {
           <meshStandardMaterial color="white" />
         </mesh>
 
-        <Cube/>
+        <Cube />
 
         <mesh rotation-x={-Math.PI / 2} position-y={-0.5} receiveShadow>
           <planeGeometry args={[5, 5]} />
