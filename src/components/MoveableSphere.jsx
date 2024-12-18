@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useCursor } from "@react-three/drei";
 
 export const MoveableSphere = (props) => {
   const [hover, setHover] = useState(false);
   const [selected, setSelected] = useState(false);
+
+  useCursor(hover)
 
   let color = hover ? "pink" : "white";
   if (selected) {
