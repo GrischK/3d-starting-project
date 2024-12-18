@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useCursor } from "@react-three/drei";
+import { useCursor, useKeyboardControls } from "@react-three/drei";
+import { Controls } from "../App";
+
+const MOVEMENT_SPEED = 0.05
 
 export const MoveableSphere = (props) => {
   const [hover, setHover] = useState(false);
@@ -11,6 +14,8 @@ export const MoveableSphere = (props) => {
   if (selected) {
     color = "hotpink"
   }
+
+  const forwardPressed = useKeyboardControls((state)=> state[Controls.forward])
 
   return (
     <mesh {...props}
