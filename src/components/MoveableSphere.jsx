@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCursor, useKeyboardControls } from "@react-three/drei";
 import { Controls } from "../App";
+import { useFrame } from "@react-three/fiber";
 
 const MOVEMENT_SPEED = 0.05
 
 export const MoveableSphere = (props) => {
+  const ref = useRef();
   const [hover, setHover] = useState(false);
   const [selected, setSelected] = useState(false);
 
@@ -15,10 +17,32 @@ export const MoveableSphere = (props) => {
     color = "hotpink"
   }
 
-  const forwardPressed = useKeyboardControls((state)=> state[Controls.forward])
+  const forwardPressed = useKeyboardControls((state) => state[Controls.forward])
+  const backPressed = useKeyboardControls((state) => state[Controls.back])
+  const leftPressed = useKeyboardControls((state) => state[Controls.left])
+  const rightPressed = useKeyboardControls((state) => state[Controls.right])
+
+  useFrame(() => {
+    if (!selected) {
+      return;
+    }
+    if (forwardPressed) {
+      ref.current.position.y += MOVEMENT_SPEED;
+    }
+    if (backPressed) {
+      ref.current.position.y -= MOVEMENT_SPEED;
+    }
+    if (rightPressed) {
+      ref.current.position.x += MOVEMENT_SPEED;
+    }
+    if (leftPressed) {
+      ref.current.position.x -= MOVEMENT_SPEED;
+    }
+  })
 
   return (
     <mesh {...props}
+          ref={ref}
           onPointerEnter={(e) => {
             e.stopPropagation();
             setHover(true)
