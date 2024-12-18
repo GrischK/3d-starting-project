@@ -11,10 +11,22 @@ export const MoveableSphere = (props) => {
 
   return (
     <mesh {...props}
-          onPointerEnter={() => setHover(true)}
-          onPointerLeave={() => setHover(false)}
-          onClick={() => setSelected(!selected)}
-          onPointerMiss={() => setSelected(false)}
+          onPointerEnter={(e) => {
+            e.stopPropagation();
+            setHover(true)
+          }}
+          onPointerLeave={(e) => {
+            e.stopPropagation();
+            setHover(false)
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelected(!selected)
+          }}
+          onPointerMissed={(e) => {
+            e.stopPropagation();
+            setSelected(false)
+          }}
     >
       <sphereGeometry args={[0.5, 64, 64]} />
       <meshStandardMaterial color={color} />
