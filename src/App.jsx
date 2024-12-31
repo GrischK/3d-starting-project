@@ -8,6 +8,7 @@ export const Controls = {
   back: "back",
   left: "left",
   right: "right",
+  space: "space"
 }
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
       { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
       { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
+      { name: Controls.space, keys: ["Space"] },
     ],
     []
   );

@@ -5,7 +5,7 @@ import { Sharky } from "./Sharky.jsx";
 export const Experience = () => {
   return (
     <>
-      <Sharky position-y={-1.7} position-z={2} />
+      <Sharky position-y={-1.6} position-z={2} />
       <MoveableSphere position-z={-10} scale={3} />
       <MoveableSphere />
       <MoveableSphere position-x={-2} />

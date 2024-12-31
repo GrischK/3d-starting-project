@@ -30,6 +30,7 @@ export function Sharky(props) {
   const backPressed = useKeyboardControls((state) => state[Controls.back])
   const leftPressed = useKeyboardControls((state) => state[Controls.left])
   const rightPressed = useKeyboardControls((state) => state[Controls.right])
+  const spacePressed=useKeyboardControls((state)=>state[Controls.space])
 
   useEffect(() => {
     if (currentAnimation && actions[currentAnimation]) {
@@ -41,6 +42,17 @@ export function Sharky(props) {
       }
     };
   }, [currentAnimation, actions]);
+
+  // useEffect(() => {
+  //   if (animation && actions[animation]) {
+  //     actions[animation].reset().fadeIn(0.5).play();
+  //   }
+  //   return () => {
+  //     if (animation && actions[animation]) {
+  //       actions[animation].fadeOut(0.5);
+  //     }
+  //   };
+  // }, [animation, actions]);
 
   useFrame(() => {
     if (leftPressed && forwardPressed) {
@@ -83,7 +95,10 @@ export function Sharky(props) {
       group.current.position.x -= MOVEMENT_SPEED;
       group.current.rotation.y = -Math.PI / 2;
       if (currentAnimation !== "Run") setCurrentAnimation("Run");
-    } else {
+    } else if (spacePressed) {
+      if (currentAnimation !== "Jump_Land") setCurrentAnimation("Jump_Land");
+  }
+  else {
       if (currentAnimation !== "Idle") setCurrentAnimation("Idle");
     }
   });
