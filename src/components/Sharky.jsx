@@ -33,17 +33,41 @@ export function Sharky(props) {
 
   useEffect(() => {
     if (currentAnimation && actions[currentAnimation]) {
-      actions[currentAnimation].reset().fadeIn(0.5).play();
+      actions[currentAnimation].reset().fadeIn(0.1).play();
     }
     return () => {
       if (currentAnimation && actions[currentAnimation]) {
-        actions[currentAnimation].fadeOut(0.5);
+        actions[currentAnimation].fadeOut(0.25);
       }
     };
   }, [currentAnimation, actions]);
 
   useFrame(() => {
-    if (forwardPressed) {
+    if (leftPressed && forwardPressed) {
+      group.current.position.z -= MOVEMENT_SPEED * Math.cos(Math.PI / 4);
+      group.current.position.x -= MOVEMENT_SPEED * Math.sin(Math.PI / 4);
+      group.current.rotation.y = Math.PI + Math.PI / 4;
+      if (currentAnimation !== "Run") setCurrentAnimation("Run");
+    }
+    else if (rightPressed && forwardPressed) {
+      group.current.position.z -= MOVEMENT_SPEED * Math.cos(Math.PI / 4);
+      group.current.position.x += MOVEMENT_SPEED * Math.sin(Math.PI / 4);
+      group.current.rotation.y = Math.PI - Math.PI / 4;
+      if (currentAnimation !== "Run") setCurrentAnimation("Run");
+    }
+    else if (rightPressed && backPressed) {
+      group.current.position.z += MOVEMENT_SPEED * Math.cos(Math.PI / 4);
+      group.current.position.x += MOVEMENT_SPEED * Math.sin(Math.PI / 4);
+      group.current.rotation.y = 35 * Math.PI / 180;
+      if (currentAnimation !== "Run") setCurrentAnimation("Run");
+    }
+    else if (leftPressed && backPressed) {
+      group.current.position.z += MOVEMENT_SPEED * Math.cos(Math.PI / 4);
+      group.current.position.x -= MOVEMENT_SPEED * Math.sin(Math.PI / 4);
+      group.current.rotation.y = -Math.PI / 4;
+      if (currentAnimation !== "Run") setCurrentAnimation("Run");
+    }
+    else if (forwardPressed) {
       group.current.position.z -= MOVEMENT_SPEED;
       group.current.rotation.y = Math.PI;
       if (currentAnimation !== "Run") setCurrentAnimation("Run");
